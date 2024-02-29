@@ -4,9 +4,9 @@ import axios from "axios";
 import { PageFormularioV } from "../../components/formulario";
 
 interface TabData {
-    name: string;
-    priority: number;
-    etapaId: string;
+    eNombre: string;
+    // priority: number;
+    // etapaId: string;
     // Agregar otras propiedades si son relevantes para tus datos
 }
 
@@ -17,8 +17,9 @@ export const PageFormularioC = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    "https://ejemploetapa-production.up.railway.app/etapas"
+                    "https://ejemploetapa-production.up.railway.app/estado"
                 );
+                console.log(response, "🐻‍❄️🐻‍❄️");
                 setData(response.data);
             } catch (error) {
                 console.error("Error al obtener los datos:", error);

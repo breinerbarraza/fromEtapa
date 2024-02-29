@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 
 interface TabData {
-    name: string;
+    eNombre: string;
     // content: React.ReactNode;
 }
 
@@ -19,7 +19,7 @@ interface PageSolicitudProps {
 export const PageFormularioV: React.FC<PageSolicitudProps> = ({ data }) => {
     // export const PageSolicitudV: React.FC<PageSolicitudProps> = ({ data }) => {
     const label = { inputProps: { "aria-label": "Checkbox demo" } };
-    const options = ["Option 1", "Option 2", "Option 3"];
+    // const options = ["Option 1", "Option 2", "Option 3"];
 
     console.log(data, "🌸🌸🌸🌸");
     return (
@@ -51,7 +51,7 @@ export const PageFormularioV: React.FC<PageSolicitudProps> = ({ data }) => {
                 >
                     <TextField
                         variant="outlined"
-                        label="Custom TextField"
+                        label="Nombre de etapa"
                         fullWidth
                         size="small" // Tamaño más pequeño
                     />
@@ -75,7 +75,7 @@ export const PageFormularioV: React.FC<PageSolicitudProps> = ({ data }) => {
                         <MenuItem value={20}>Twenty</MenuItem>
                         <MenuItem value={30}>Thirty</MenuItem>
                     </Autocomplete> */}
-                    <Autocomplete
+                    {/* <Autocomplete
                         options={options}
                         size="small"
                         renderInput={(params) => (
@@ -86,12 +86,25 @@ export const PageFormularioV: React.FC<PageSolicitudProps> = ({ data }) => {
                                 fullWidth
                             />
                         )}
+                    /> */}
+                    <Autocomplete
+                        options={data.map((option) => option.eNombre)}
+                        size="small"
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label="Estados"
+                                variant="outlined"
+                                fullWidth
+                            />
+                        )}
                     />
                 </Box>
+                <Box>
+                    <Checkbox {...label} />
+                    <Checkbox {...label} />
+                </Box>
             </div>
-
-            <Checkbox {...label} />
-            <Checkbox {...label} />
         </div>
     );
 };

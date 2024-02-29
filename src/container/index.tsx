@@ -10,8 +10,9 @@ export const PageSolicitudC = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    "https://ejemploetapa-production.up.railway.app/etapas"
+                    "https://ejemploetapa-production.up.railway.app/estado"
                 );
+                console.log(response, "🐻‍❄️");
                 setData(response.data);
             } catch (error) {
                 console.error("Error al obtener los datos:", error);

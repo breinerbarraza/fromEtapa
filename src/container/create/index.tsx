@@ -14,6 +14,10 @@ interface TabData {
 
 export const PageCreateC = () => {
     const [data, setData] = useState<TabData[]>([]);
+    const [dataUpdate, setDataUpdate] = useState<any>({
+        eNombre: "",
+        ePrioridad: 0,
+    });
     const [creatingRow, setCreatingRow] = React.useState(false);
     const [newRow, setNewRow] = React.useState<TabData>({
         eNombre: "",
@@ -25,7 +29,7 @@ export const PageCreateC = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    "https://ejemploetapa-production.up.railway.app/etapas"
+                    "https://ejemploetapa-production.up.railway.app/estado"
                 );
                 setData(response.data);
             } catch (error) {
@@ -44,7 +48,7 @@ export const PageCreateC = () => {
         console.log(newRow);
         try {
             const response = await fetch(
-                "https://ejemploetapa-production.up.railway.app/etapas",
+                "https://ejemploetapa-production.up.railway.app/estado",
                 {
                     method: "POST",
                     headers: {
@@ -70,8 +74,19 @@ export const PageCreateC = () => {
             console.error("Error al guardar la fila:", error);
         }
     };
-
-    const handleEditRow = (eId: string) => {
+    const handleTextFieldChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setDataUpdate({
+            ...dataUpdate,
+            [event.target.name]: event.target.value,
+        });
+    };
+    const handleEditRow = async (eId: string) => {
+        console.log(eId);
+        const response: any = await axios.get(
+            `https://ejemploetapa-production.up.railway.app/estado/${eId}`
+        );
         // Encuentra la fila correspondiente en el estado y actualiza su estado de edición
         const updatedData = data.map((row) => {
             if (row.eId === eId) {
@@ -79,10 +94,10 @@ export const PageCreateC = () => {
             }
             return row;
         });
-
+        setDataUpdate(response.data);
         setData(updatedData);
     };
-
+    console.log(dataUpdate);
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNewRow({ ...newRow, eNombre: event.target.value });
     };
@@ -98,7 +113,7 @@ export const PageCreateC = () => {
         try {
             // Realiza una solicitud DELETE a la API para eliminar la fila de la base de datos
             await axios.delete(
-                `https://ejemploetapa-production.up.railway.app/etapas/${eId}`
+                `https://ejemploetapa-production.up.railway.app/estado/${eId}`
             );
 
             // Filtra los datos para eliminar la fila con el nombre correspondiente del estado local
@@ -111,6 +126,7 @@ export const PageCreateC = () => {
 
     return (
         <BasicTable
+            dataUpdate={dataUpdate}
             data={data}
             creatingRow={creatingRow}
             handlePriorityChange={handlePriorityChange}
@@ -120,6 +136,7 @@ export const PageCreateC = () => {
             newRow={newRow}
             handleDeleteRow={handleDeleteRow}
             handleEditRow={handleEditRow}
+            handleTextFieldChange={handleTextFieldChange}
         />
     );
 };

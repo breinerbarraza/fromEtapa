@@ -28,6 +28,8 @@ interface TData {
     newRow: TabData;
     handleEditRow: (eId: string) => void;
     handleDeleteRow: (eId: string) => void;
+    dataUpdate: any;
+    handleTextFieldChange: any;
     // eId: string
 }
 
@@ -41,6 +43,8 @@ export const BasicTable: React.FC<TData> = ({
     newRow,
     handleDeleteRow,
     handleEditRow,
+    dataUpdate,
+    handleTextFieldChange,
 }) => {
     return (
         <Box
@@ -83,16 +87,27 @@ export const BasicTable: React.FC<TData> = ({
                                 <TableRow key={row.eId}>
                                     <TableCell component="th" scope="row">
                                         {row.eNombre}
+                                        <input
+                                            value={dataUpdate.eNombre}
+                                            onChange={(e) =>
+                                                handleTextFieldChange(e)
+                                            }
+                                        />
                                     </TableCell>
-                                    <TableCell>{row.ePrioridad}</TableCell>
+                                    <TableCell>
+                                        {row.ePrioridad}
+                                        <input
+                                            value={dataUpdate.ePrioridad}
+                                            onChange={(e) =>
+                                                handleTextFieldChange(e)
+                                            }
+                                        />
+                                    </TableCell>
                                     <TableCell>
                                         <IconButton
                                             onClick={() =>
                                                 handleEditRow(row.eId)
                                             }
-                                            // onClick={() =>
-                                            //     handleDeleteRow(row.eId)
-                                            // }
                                         >
                                             <ModeEditIcon
                                                 style={{
