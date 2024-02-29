@@ -2,6 +2,6 @@ import React from 'react'
 
 export const PageSolicitudV = () => {
   return (
-    <div>PagePr</div>
+    <div>PagePr  Hola Uso</div>
   )
 }
