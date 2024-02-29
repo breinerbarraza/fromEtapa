@@ -3,7 +3,7 @@ import React from "react";
 import Page from "./ejemplo";
 
 interface TabData {
-    name: string;
+    eNombre: string;
     content: React.ReactNode;
 }
 
@@ -62,7 +62,7 @@ export const PageSolicitudV: React.FC<PageSolicitudProps> = ({ data }) => {
                     {data.map((item, index) => (
                         <Tab
                             key={index}
-                            label={item.name}
+                            label={item.eNombre}
                             {...a11yProps(index)}
                         />
                     ))}
