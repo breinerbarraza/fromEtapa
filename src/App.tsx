@@ -10,8 +10,8 @@ function App() {
       <Routes>
         <Route path="/" Component={PageSolicitud} />
         <Route path="/kathe" Component={Page} />
-        <Route path="/Formulario" Component={PageFormulario} />
-        <Route path="/Solicitud" Component={SolicitudP} />
+        <Route path="/formulario" Component={PageFormulario} />
+        <Route path="/solicitud" Component={SolicitudP} />
       </Routes>
     </BrowserRouter>
   );
