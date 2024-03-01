@@ -1,140 +1,135 @@
 import React, { useEffect, useState } from "react";
 
-// import BasicTable from "../../components/kathe";
 import axios from "axios";
 import { BasicTable } from "../../components/kathe";
-// import { BasicTable } from "../../components/kathe";
 
 interface TabData {
-  eNombre: string;
-  ePrioridad: number;
-  eId: string;
-  // Agregar otras propiedades si son relevantes para tus datos
+    eNombre: string;
+    ePrioridad: number;
 }
 
 export const PageCreateC = () => {
-  const [data, setData] = useState<TabData[]>([]);
-  const [dataUpdate, setDataUpdate] = useState({
-    eNombre: "",
-    ePrioridad: 0,
-  });
-  const [creatingRow, setCreatingRow] = React.useState(false);
-  const [newRow, setNewRow] = React.useState<TabData>({
-    eNombre: "",
-    ePrioridad: 0,
-    eId: "",
-  });
+    const [data, setData] = useState<TabData[]>([]);
+    const [dataId, setDataId] = useState("");
+    const [creatingRow, setCreatingRow] = React.useState<any>({
+        createRow: false,
+        updateRow: false,
+    });
+    const [newRow, setNewRow] = React.useState<TabData>({
+        eNombre: "",
+        ePrioridad: 0,
+    });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "https://ejemploetapa-production.up.railway.app/estado"
-        );
-        setData(response.data);
-      } catch (error) {
-        console.error("Error al obtener los datos:", error);
-      }
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(
+                    "https://ejemploetapa-production.up.railway.app/estado"
+                );
+                setData(response.data);
+            } catch (error) {
+                console.error("Error al obtener los datos:", error);
+            }
+        };
+
+        fetchData();
+    }, [creatingRow]);
+
+    const handleCreateRow = () => {
+        setCreatingRow({ ...creatingRow, createRow: true });
     };
 
-    fetchData();
-  }, []);
+    const handleSaveRow = async () => {
+        try {
+            const response = await fetch(
+                "https://ejemploetapa-production.up.railway.app/estado",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        eNombre: newRow.eNombre,
+                        ePrioridad: +newRow.ePrioridad,
+                        eEstado: 1,
+                    }),
+                }
+            );
 
-  const handleCreateRow = () => {
-    setCreatingRow(true);
-  };
+            if (!response.ok) {
+                throw new Error("Error al guardar la fila");
+            }
 
-  const handleSaveRow = async () => {
-    console.log(newRow);
-    try {
-      const response = await fetch(
-        "https://ejemploetapa-production.up.railway.app/estado",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            eNombre: newRow.eNombre,
-            ePrioridad: newRow.ePrioridad,
-            eEstado: 1,
-          }),
+            setCreatingRow(false);
+        } catch (error) {
+            console.error("Error al guardar la fila:", error);
         }
-      );
+    };
 
-      if (!response.ok) {
-        throw new Error("Error al guardar la fila");
-      }
+    const handleEditOpen = async (eId: string) => {
+        setCreatingRow({ ...creatingRow, updateRow: true });
+        try {
+            const response = await axios.get(
+                `https://ejemploetapa-production.up.railway.app/estado/${eId}`
+            );
+            setNewRow({
+                eNombre: response.data.eNombre,
+                ePrioridad: response.data.ePrioridad,
+            });
+            setDataId(response.data);
+        } catch (error) {
+            console.error("Error al obtener datos para editar:", error);
+        }
+        setDataId(eId);
+    };
 
-      data.push(newRow);
+    const handleEditRow = async () => {
+        try {
+            console.log(dataId, newRow);
+            await axios.patch(
+                `https://ejemploetapa-production.up.railway.app/estado/${dataId}`,
+                {
+                    eNombre: newRow.eNombre,
+                    ePrioridad: +newRow.ePrioridad,
+                }
+            );
+        } catch (error) {
+            console.error("Error al obtener datos para editar:", error);
+        }
+        setCreatingRow({ ...creatingRow, updateRow: true });
+    };
 
-      setNewRow({ eNombre: "", ePrioridad: 0, eId: "" });
-      setCreatingRow(false);
-    } catch (error) {
-      console.error("Error al guardar la fila:", error);
-    }
-  };
-  const handleTextFieldChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    console.log(event);
-    setDataUpdate({
-      ...dataUpdate,
-      [event.target.name]: event.target.value,
-    });
-  };
-  console.log(dataUpdate);
-  const handleEditRow = async (eId: string) => {
-    const response = await axios.get(
-      `https://ejemploetapa-production.up.railway.app/estado/${eId}`
+    const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setNewRow({
+            ...newRow,
+            [event.target.name]: event.target.value,
+        });
+    };
+
+    const handleDeleteRow = async (eId: string) => {
+        try {
+            await axios.delete(
+                `https://ejemploetapa-production.up.railway.app/estado/${eId}`
+            );
+
+            const updatedData = data.filter((row: any) => row.eId !== eId);
+            setData(updatedData);
+        } catch (error) {
+            console.error("Error al eliminar la fila:", error);
+        }
+    };
+
+    return (
+        <BasicTable
+            data={data}
+            creatingRow={creatingRow}
+            handleNameChange={handleNameChange}
+            handleSaveRow={handleSaveRow}
+            handleCreateRow={handleCreateRow}
+            newRow={newRow}
+            handleDeleteRow={handleDeleteRow}
+            handleEditRow={handleEditRow}
+            handleEditOpen={handleEditOpen}
+        />
     );
-    // Encuentra la fila correspondiente en el estado y actualiza su estado de edición
-    const updatedData = data.map((row) => {
-      if (row.eId === eId) {
-        return { ...row, editing: true }; // Añade una propiedad 'editing' a la fila
-      }
-      return row;
-    });
-    setDataUpdate(response.data);
-    setData(updatedData);
-  };
-  console.log(dataUpdate);
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewRow({ ...newRow, eNombre: event.target.value });
-  };
-
-  const handlePriorityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewRow({ ...newRow, ePrioridad: parseInt(event.target.value) });
-  };
-
-  const handleDeleteRow = async (eId: string) => {
-    try {
-      // Realiza una solicitud DELETE a la API para eliminar la fila de la base de datos
-      await axios.delete(
-        `https://ejemploetapa-production.up.railway.app/estado/${eId}`
-      );
-
-      // Filtra los datos para eliminar la fila con el nombre correspondiente del estado local
-      const updatedData = data.filter((row) => row.eId !== eId);
-      setData(updatedData);
-    } catch (error) {
-      console.error("Error al eliminar la fila:", error);
-    }
-  };
-
-  return (
-    <BasicTable
-      dataUpdate={dataUpdate}
-      data={data}
-      creatingRow={creatingRow}
-      handlePriorityChange={handlePriorityChange}
-      handleNameChange={handleNameChange}
-      handleSaveRow={handleSaveRow}
-      handleCreateRow={handleCreateRow}
-      newRow={newRow}
-      handleDeleteRow={handleDeleteRow}
-      handleEditRow={handleEditRow}
-      handleTextFieldChange={handleTextFieldChange}
-    />
-  );
 };
