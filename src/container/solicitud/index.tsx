@@ -1,5 +1,46 @@
+import React, { useEffect, useState } from "react";
 import { SolicitudV } from "../../components/solicitud";
+import axios from "axios";
 
 export const SolicitudC = () => {
-  return <SolicitudV />;
+  const [dataTipoEtapa, setDataTipoEtapa] = useState([]);
+  const [values, setValues] = useState({});
+  const [valuesSelect, setValuesSelect] = useState<{ tipoSolicitud: string }>();
+  useEffect(() => {
+    const TipoEstado = async () => {
+      try {
+        const resp = await axios.get("http://localhost:3000/etapa");
+        setDataTipoEtapa(resp.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    TipoEstado();
+  }, []);
+
+  const onChangeRegister = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const onChangeRegisterSelect = (_: any, newValue: any) => {
+    setValuesSelect(newValue);
+  };
+  const onSubmitRegister = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    console.log(values, valuesSelect);
+    await axios.post("http://localhost:3000/application", {
+      ...values,
+      tipoSolicitud: valuesSelect?.tipoSolicitud,
+    });
+  };
+  return (
+    <SolicitudV
+      dataTipoEtapa={dataTipoEtapa}
+      onChangeRegister={onChangeRegister}
+      onChangeRegisterSelect={onChangeRegisterSelect}
+      onSubmitRegister={onSubmitRegister}
+    />
+  );
 };
