@@ -21,13 +21,18 @@ export const TipoSolicitudV: React.FC<any> = ({
   addEtapa,
   deleteEtapa,
   onHandleName,
+  trId,
 }) => {
   const theme = useTheme();
   return (
     <Box>
       <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
         <Box>
-          <Typography>Creación de tramite</Typography>
+          {trId ? (
+            <Typography>Actualizar de tramite</Typography>
+          ) : (
+            <Typography>Creación de tramite</Typography>
+          )}
           <Divider
             sx={{
               marginBottom: "10px",
@@ -112,7 +117,7 @@ export const TipoSolicitudV: React.FC<any> = ({
             );
           })}
           <Button variant="contained" type="submit">
-            CREAR
+            {trId ? "ACTUALIZAR" : "CREAR"}
           </Button>
         </form>
       </Box>

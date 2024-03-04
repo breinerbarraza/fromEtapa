@@ -4,6 +4,7 @@ import Page from "./page/create";
 import PageFormulario from "./page/formulario";
 import { SolicitudP } from "./page/solicitud";
 import { TipoSolicitudP } from "./page/tipoSolicitud";
+import { ListaTramiteP } from "./page/ListaTramite";
 
 function App() {
   return (
@@ -14,6 +15,8 @@ function App() {
         <Route path="/formulario" Component={PageFormulario} />
         <Route path="/solicitud" Component={SolicitudP} />
         <Route path="/tipoTramite" Component={TipoSolicitudP} />
+        <Route path="/tipoTramite/:trId" Component={TipoSolicitudP} />
+        <Route path="/listaTramite" Component={ListaTramiteP} />
       </Routes>
     </BrowserRouter>
   );

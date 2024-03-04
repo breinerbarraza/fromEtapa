@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { TipoSolicitudV } from "../../components/tipoSolicitud";
+import { Navigate, useParams } from "react-router-dom";
 
 export const TipoSolicitudC = () => {
+  const { trId } = useParams();
   const [dataEtapa, setDataEtapa] = useState([]);
+  const [disabled, setDisabled] = useState(false);
   const [dataValues, setDataValues] = useState<any>([
     { id: new Date().getTime() },
   ]);
@@ -22,14 +25,17 @@ export const TipoSolicitudC = () => {
 
   const onSubmitRegister = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    await axios.post("http://localhost:3000/tipoSolicitud", {
+    const resp = await axios.post("http://localhost:3000/tipoSolicitud", {
       ...values,
-      solicitudTipoEtapa:dataValues.map((x:any) =>({
+      solicitudTipoEtapa: dataValues.map((x: any) => ({
         tipoEtapa: x.teId,
         steOrden: x.eOrden,
-
       })),
     });
+    console.log(resp);
+    if (resp) {
+      setDisabled(true);
+    }
   };
   const onHandleName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -65,17 +71,21 @@ export const TipoSolicitudC = () => {
     const data = dataValues.filter((x: any) => x.id !== id);
     setDataValues(data);
   };
-
+  console.log(trId);
   return (
-    <TipoSolicitudV
-      dataEtapa={dataEtapa}
-      dataValues={dataValues}
-      addEtapa={addEtapa}
-      deleteEtapa={deleteEtapa}
-      onChangeRegister={onChangeRegister}
-      onChangeRegisterSelect={onChangeRegisterSelect}
-      onSubmitRegister={onSubmitRegister}
-      onHandleName={onHandleName}
-    />
+    <>
+      {disabled && <Navigate to="/listaTramite" />}
+      <TipoSolicitudV
+        trId={trId}
+        dataEtapa={dataEtapa}
+        dataValues={dataValues}
+        addEtapa={addEtapa}
+        deleteEtapa={deleteEtapa}
+        onChangeRegister={onChangeRegister}
+        onChangeRegisterSelect={onChangeRegisterSelect}
+        onSubmitRegister={onSubmitRegister}
+        onHandleName={onHandleName}
+      />
+    </>
   );
 };
