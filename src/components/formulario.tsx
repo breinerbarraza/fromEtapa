@@ -1,10 +1,12 @@
 import {
     Autocomplete,
     Box,
+    Button,
     Checkbox,
     // MenuItem,
     // Select,
     TextField,
+    Typography,
 } from "@mui/material";
 
 interface TabData {
@@ -59,7 +61,7 @@ export const PageFormularioV: React.FC<PageSolicitudProps> = ({ data }) => {
                 <Box
                     sx={{
                         // backgroundColor: "green",
-                        width: "40%",
+                        width: "30%",
                         height: "50px", // Altura ajustada para el Select
                         padding: "5px", // Padding para el espacio interior
                     }}
@@ -100,11 +102,76 @@ export const PageFormularioV: React.FC<PageSolicitudProps> = ({ data }) => {
                         )}
                     />
                 </Box>
-                <Box>
-                    <Checkbox {...label} />
+            </div>
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    // backgroundColor: "red",
+                    width: "40%",
+                }}
+            >
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "column",
+                    }}
+                >
+                    <Typography>Editar</Typography>
                     <Checkbox {...label} />
                 </Box>
-            </div>
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "column",
+                    }}
+                >
+                    <Typography>Rechazar</Typography>
+                    <Checkbox {...label} />
+                </Box>
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "column",
+                    }}
+                >
+                    <Typography>Pendiente</Typography>
+                    <Checkbox {...label} />
+                </Box>
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "column",
+                    }}
+                >
+                    <Typography>Aprobar</Typography>
+                    <Checkbox {...label} />
+                </Box>
+            </Box>
+            <Box
+                sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    marginTop: "70px",
+                    marginBottom: "10px",
+                }}
+            >
+                <Button
+                    style={{
+                        backgroundColor: "green",
+                        color: "#fff",
+                        fontSize: "12px",
+                    }}
+                    // onClick={handleCreateRow}
+                >
+                    Guardar
+                </Button>
+            </Box>
         </div>
     );
 };
