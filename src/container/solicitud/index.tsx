@@ -9,7 +9,8 @@ export const SolicitudC = () => {
   useEffect(() => {
     const TipoEstado = async () => {
       try {
-        const resp = await axios.get("http://localhost:3000/etapa");
+        const resp = await axios.get("http://localhost:3000/tipoSolicitud");
+        console.log(resp)
         setDataTipoEtapa(resp.data);
       } catch (error) {
         console.log(error);
@@ -29,7 +30,6 @@ export const SolicitudC = () => {
   };
   const onSubmitRegister = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    console.log(values, valuesSelect);
     await axios.post("http://localhost:3000/application", {
       ...values,
       tipoSolicitud: valuesSelect?.tipoSolicitud,

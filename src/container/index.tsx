@@ -3,23 +3,25 @@ import axios from "axios";
 import { PageSolicitudV } from "../components";
 
 export const PageSolicitudC = () => {
-    // Define el estado para almacenar los datos
-    const [data, setData] = useState([]);
+  // Define el estado para almacenar los datos
+  const [data, setData] = useState([]);
+  const [dataList, setDataList] = useState([]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(
-                    "https://ejemploetapa-production.up.railway.app/estado"
-                );
-                console.log(response, "🐻‍❄️");
-                setData(response.data);
-            } catch (error) {
-                console.error("Error al obtener los datos:", error);
-            }
-        };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/etapa");
+        setData(response.data);
+        const res = await axios.get("http://localhost:3000/application");
+        setDataList(res.data);
+      } catch (error) {
+        console.error("Error al obtener los datos:", error);
+      }
+    };
 
-        fetchData();
-    }, []);
-    return <PageSolicitudV data={data} />;
+    fetchData();
+  }, []);
+  console.log(data);
+  console.log(dataList, "🦜");
+  return <PageSolicitudV data={data} dataList={dataList} />;
 };

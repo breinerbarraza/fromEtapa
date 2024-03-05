@@ -92,30 +92,6 @@ export const ListaTramiteV: React.FC<any> = ({ data }) => {
           borderColor: theme.palette.primary.dark,
         }}
       />
-      {/* {!creatingRow.createRow && (
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "end",
-            marginBottom: "10px",
-          }}
-        >
-          <Button
-            style={{
-              backgroundColor: "green",
-              color: "#fff",
-              fontSize: "12px",
-            }}
-            onClick={handleCreateRow}
-          >
-            Crear
-          </Button>
-        </Box>
-      )} */}
-      {/* {creatingRow.createRow && (
-        <Button onClick={handleSaveRow}>Guardar</Button>
-      )} */}
       <Box sx={{ height: 500, width: "100%" }}>
         <DataGrid
           rows={data || []}

@@ -84,8 +84,8 @@ export const SolicitudV: React.FC<any> = ({
             <Grid item xs={12} sm={6} md={3} sx={{ padding: "10px" }}>
               <Autocomplete
                 options={dataTipoEtapa.map((option: any) => ({
-                  label: option.teNombre,
-                  tipoSolicitud: option.teId,
+                  label: option.trNombre,
+                  tipoSolicitud: option.trId,
                 }))}
                 id="tipoSolicitud"
                 onChange={(e, newValue) =>
@@ -95,7 +95,7 @@ export const SolicitudV: React.FC<any> = ({
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="Tipo de solicitud"
+                    label="Tipo de tramite"
                     variant="outlined"
                     fullWidth
                   />
