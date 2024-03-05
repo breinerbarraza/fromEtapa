@@ -1,10 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import PageSolicitud from "./page";
+import PageSolicitud from "./page/etapa";
 import Page from "./page/create";
 import PageFormulario from "./page/formulario";
 import { SolicitudP } from "./page/solicitud";
 import { TipoSolicitudP } from "./page/tipoSolicitud";
 import { ListaTramiteP } from "./page/ListaTramite";
+import { ListaSolicitudesP } from "./page/listaSolicitud";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/tipoTramite" Component={TipoSolicitudP} />
         <Route path="/tipoTramite/:trId" Component={TipoSolicitudP} />
         <Route path="/listaTramite" Component={ListaTramiteP} />
+        <Route path="/listaSolicitudes/:id" Component={ListaSolicitudesP} />
       </Routes>
     </BrowserRouter>
   );

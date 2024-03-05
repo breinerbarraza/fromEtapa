@@ -18,7 +18,6 @@ interface TNewRow {
 export const PageFormularioC = () => {
     const [data, setData] = useState<TabData[]>([]);
     const [dataList, setDataList] = useState<any[]>([]);
-    console.log(dataList, "-➕➕➕");
     const [newRow, setNewRow] = React.useState<TNewRow>({
         teNombre: "",
         estado: "",
@@ -34,7 +33,7 @@ export const PageFormularioC = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    "https://ejemploetapa-production.up.railway.app/estado"
+                    "http://localhost:3000/estado"
                 );
                 setData(response.data);
             } catch (error) {
@@ -78,7 +77,7 @@ export const PageFormularioC = () => {
     const handleSaveRow = async () => {
         try {
             const response = await fetch(
-                "https://ejemploetapa-production.up.railway.app/etapa",
+                "http://localhost:3000/etapa",
                 {
                     method: "POST",
                     headers: {
@@ -113,7 +112,7 @@ export const PageFormularioC = () => {
     const fetchDataList = async () => {
         try {
             const response = await axios.get(
-                "https://ejemploetapa-production.up.railway.app/etapa"
+                "http://localhost:3000/etapa"
             );
             setDataList(response.data);
         } catch (error) {

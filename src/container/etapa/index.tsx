@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { PageSolicitudV } from "../components";
+import { PageSolicitudV } from "../../components/etapa";
 
 export const PageSolicitudC = () => {
   // Define el estado para almacenar los datos
