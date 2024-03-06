@@ -5,30 +5,44 @@ import { Link } from "react-router-dom";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 
-export const ListaSolicitudesV: React.FC<any> = ({ data }) => {
-  console.log(data);
+export const ListaSolicitudesV: React.FC<any> = ({ data, dataList }) => {
+  console.log(dataList);
   const theme = useTheme();
   const columns: GridColDef[] = [
     {
-      field: "trNombre",
+      field: "aNombre",
       headerAlign: "center",
       align: "center",
       headerName: "NOMBRE",
-      flex: 4,
+      flex: 2,
     },
     {
-      field: "1",
+      field: "aTipoIdentidad",
       headerAlign: "center",
       align: "center",
-      headerName: "PRIORIDAD",
-      flex: 3,
+      headerName: "TIPO DE IDENTIDAD",
+      flex: 2,
+    },
+    {
+      field: "aIdentidad",
+      headerAlign: "center",
+      align: "center",
+      headerName: "NÚMERO DE IDENTIDAD",
+      flex: 2,
+    },
+    {
+      field: "aCoordenada",
+      headerAlign: "center",
+      align: "center",
+      headerName: "COORDENADA",
+      flex: 2,
     },
     {
       field: "2",
       headerAlign: "center",
       align: "center",
       headerName: "ACCIONES",
-      flex: 3,
+      flex: 2,
       renderCell: ({ row }: any) => {
         return (
           <div>
@@ -76,9 +90,9 @@ export const ListaSolicitudesV: React.FC<any> = ({ data }) => {
       />
       <Box sx={{ height: 500, width: "100%" }}>
         <DataGrid
-          rows={[]}
+          rows={dataList || []}
           columns={columns}
-          getRowId={(row: any) => row.trId}
+          getRowId={(row: any) => row.aId}
           initialState={{
             pagination: {
               paginationModel: {

@@ -136,7 +136,6 @@ export const BasicTable: React.FC<TData> = ({
                             },
                         },
                     }}
-                    disableSelectionOnClick
                     slots={{ toolbar: GridToolbar }}
                     pageSizeOptions={[5]}
                 />

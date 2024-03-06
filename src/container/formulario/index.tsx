@@ -33,7 +33,7 @@ export const PageFormularioC = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    "http://localhost:3000/estado"
+                    "https://ejemploetapa-production.up.railway.app/estado"
                 );
                 setData(response.data);
             } catch (error) {
@@ -77,7 +77,7 @@ export const PageFormularioC = () => {
     const handleSaveRow = async () => {
         try {
             const response = await fetch(
-                "http://localhost:3000/etapa",
+                "https://ejemploetapa-production.up.railway.app/etapa",
                 {
                     method: "POST",
                     headers: {
@@ -112,7 +112,7 @@ export const PageFormularioC = () => {
     const fetchDataList = async () => {
         try {
             const response = await axios.get(
-                "http://localhost:3000/etapa"
+                "https://ejemploetapa-production.up.railway.app/etapa"
             );
             setDataList(response.data);
         } catch (error) {

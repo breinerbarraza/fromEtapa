@@ -10,9 +10,9 @@ export const PageSolicitudC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/etapa");
+        const response = await axios.get("https://ejemploetapa-production.up.railway.app/etapa");
         setData(response.data);
-        const res = await axios.get("http://localhost:3000/application");
+        const res = await axios.get("https://ejemploetapa-production.up.railway.app/application");
         setDataList(res.data);
       } catch (error) {
         console.error("Error al obtener los datos:", error);
