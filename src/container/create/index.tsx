@@ -24,7 +24,7 @@ export const PageCreateC = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    "https://ejemploetapa-production.up.railway.app/estado"
+                    "http://localhost:3000/estado"
                 );
                 setData(response.data);
             } catch (error) {
@@ -42,7 +42,7 @@ export const PageCreateC = () => {
     const handleSaveRow = async () => {
         try {
             const response = await fetch(
-                "https://ejemploetapa-production.up.railway.app/estado",
+                "http://localhost:3000/estado",
                 {
                     method: "POST",
                     headers: {
@@ -70,7 +70,7 @@ export const PageCreateC = () => {
         setCreatingRow({ ...creatingRow, updateRow: true });
         try {
             const response = await axios.get(
-                `https://ejemploetapa-production.up.railway.app/estado/${eId}`
+                `http://localhost:3000/estado/${eId}`
             );
             setNewRow({
                 eNombre: response.data.eNombre,
@@ -87,7 +87,7 @@ export const PageCreateC = () => {
         try {
             console.log(dataId, newRow);
             await axios.patch(
-                `https://ejemploetapa-production.up.railway.app/estado/${dataId}`,
+                `http://localhost:3000/estado/${dataId}`,
                 {
                     eNombre: newRow.eNombre,
                     ePrioridad: +newRow.ePrioridad,
@@ -109,7 +109,7 @@ export const PageCreateC = () => {
     const handleDeleteRow = async (eId: string) => {
         try {
             await axios.delete(
-                `https://ejemploetapa-production.up.railway.app/estado/${eId}`
+                `http://localhost:3000/estado/${eId}`
             );
 
             const updatedData = data.filter((row: any) => row.eId !== eId);

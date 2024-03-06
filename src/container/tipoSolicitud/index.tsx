@@ -14,7 +14,7 @@ export const TipoSolicitudC = () => {
   useEffect(() => {
     const TipoEstado = async () => {
       try {
-        const resp = await axios.get("https://ejemploetapa-production.up.railway.app/etapa");
+        const resp = await axios.get("http://localhost:3000/etapa");
         setDataEtapa(resp.data);
       } catch (error) {
         console.log(error);
@@ -25,7 +25,7 @@ export const TipoSolicitudC = () => {
 
   const onSubmitRegister = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const resp = await axios.post("https://ejemploetapa-production.up.railway.app/tipoSolicitud", {
+    const resp = await axios.post("http://localhost:3000/tipoSolicitud", {
       ...values,
       solicitudTipoEtapa: dataValues.map((x: any) => ({
         tipoEtapa: x.teId,

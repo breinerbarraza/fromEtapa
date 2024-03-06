@@ -8,7 +8,7 @@ export const ListaTramiteC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://ejemploetapa-production.up.railway.app/tipoSolicitud");
+        const response = await axios.get("http://localhost:3000/tipoSolicitud");
         setData(response.data);
       } catch (error) {
         console.error("Error al obtener los datos:", error);

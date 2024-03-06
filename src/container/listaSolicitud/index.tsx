@@ -9,9 +9,9 @@ export const ListaSolicitudesC = () => {
   const [dataList, setDataList] = useState({});
   useEffect(() => {
     const etapaId = async () => {
-      const resp = await axios.get(`https://ejemploetapa-production.up.railway.app/etapa/${id}`);
+      const resp = await axios.get(`http://localhost:3000/etapa/${id}`);
       setData(resp.data);
-      const { data } = await axios.get(`https://ejemploetapa-production.up.railway.app/application/${id}`);
+      const { data } = await axios.get(`http://localhost:3000/application/${id}`);
       setDataList(data);
     };
     etapaId();
